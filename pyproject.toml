@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "music-categorizer"
+version = "0.1.0"
+description = "Notebook-first tools for estimating scale family and culture from uploaded or live audio."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "ipykernel>=6.29",
+  "ipywidgets>=8.1",
+  "librosa>=0.11",
+  "matplotlib>=3.9",
+  "notebook>=7.2",
+  "numpy>=2.1",
+  "pandas>=2.2",
+  "scipy>=1.14",
+  "sounddevice>=0.5",
+  "soundfile>=0.13",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3",
+]
+
+[project.scripts]
+music-scale-analyze = "music_categorizer.cli:main"
+music-scale-notebook = "music_categorizer.launch_notebook:main"
+
+[tool.setuptools.packages.find]
+include = ["music_categorizer*"]
+
+[tool.setuptools.package-data]
+music_categorizer = ["data/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

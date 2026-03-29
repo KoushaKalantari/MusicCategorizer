@@ -1,0 +1,398 @@
+[
+  {
+    "culture": "Persian",
+    "family": "Dastgah",
+    "name": "Shur / Nava",
+    "bins": 24,
+    "intervals": [0, 3, 6, 10, 14, 16, 20],
+    "description": "Quarter-tone profile for Shur and Nava style pitch material.",
+    "citation_hint": "Quarter-tone approximations adapted from Dastgah step tables reported in Abdoli (ISMIR 2011)."
+  },
+  {
+    "culture": "Persian",
+    "family": "Dastgah",
+    "name": "Segah",
+    "bins": 24,
+    "intervals": [0, 4, 7, 10, 14, 17, 20],
+    "description": "Quarter-tone profile emphasizing the neutral third associated with Segah.",
+    "citation_hint": "Quarter-tone approximations adapted from Dastgah step tables reported in Abdoli (ISMIR 2011)."
+  },
+  {
+    "culture": "Persian",
+    "family": "Dastgah",
+    "name": "Chahargah",
+    "bins": 24,
+    "intervals": [0, 3, 8, 10, 13, 18, 20],
+    "description": "Quarter-tone profile for Chahargah's raised fourth area.",
+    "citation_hint": "Quarter-tone approximations adapted from Dastgah step tables reported in Abdoli (ISMIR 2011)."
+  },
+  {
+    "culture": "Persian",
+    "family": "Dastgah",
+    "name": "Homayun",
+    "bins": 24,
+    "intervals": [0, 2, 8, 10, 14, 16, 20],
+    "description": "Quarter-tone profile approximating Homayun.",
+    "citation_hint": "Quarter-tone approximations adapted from Dastgah step tables reported in Abdoli (ISMIR 2011)."
+  },
+  {
+    "culture": "Persian",
+    "family": "Dastgah",
+    "name": "Mahur / Rast-Panjgah",
+    "bins": 24,
+    "intervals": [0, 4, 8, 10, 14, 18, 20],
+    "description": "Quarter-tone profile close to the Mahur and Rast-Panjgah family.",
+    "citation_hint": "Quarter-tone approximations adapted from Dastgah step tables reported in Abdoli (ISMIR 2011)."
+  },
+  {
+    "culture": "Indian",
+    "family": "Thaat",
+    "name": "Bilawal",
+    "bins": 12,
+    "intervals": [0, 2, 4, 5, 7, 9, 11],
+    "description": "All shuddha swaras; the major-scale thaat.",
+    "citation_hint": "Bhatkhande thaat system."
+  },
+  {
+    "culture": "Indian",
+    "family": "Thaat",
+    "name": "Kalyan",
+    "bins": 12,
+    "intervals": [0, 2, 4, 6, 7, 9, 11],
+    "description": "Bilawal with tivra Ma.",
+    "citation_hint": "Bhatkhande thaat system."
+  },
+  {
+    "culture": "Indian",
+    "family": "Thaat",
+    "name": "Khamaj",
+    "bins": 12,
+    "intervals": [0, 2, 4, 5, 7, 9, 10],
+    "description": "Major with komal Ni.",
+    "citation_hint": "Bhatkhande thaat system."
+  },
+  {
+    "culture": "Indian",
+    "family": "Thaat",
+    "name": "Kafi",
+    "bins": 12,
+    "intervals": [0, 2, 3, 5, 7, 9, 10],
+    "description": "Komal Ga and komal Ni.",
+    "citation_hint": "Bhatkhande thaat system."
+  },
+  {
+    "culture": "Indian",
+    "family": "Thaat",
+    "name": "Asavari",
+    "bins": 12,
+    "intervals": [0, 2, 3, 5, 7, 8, 10],
+    "description": "Komal Ga, Dha, and Ni.",
+    "citation_hint": "Bhatkhande thaat system."
+  },
+  {
+    "culture": "Indian",
+    "family": "Thaat",
+    "name": "Bhairavi",
+    "bins": 12,
+    "intervals": [0, 1, 3, 5, 7, 8, 10],
+    "description": "Komal Re, Ga, Dha, and Ni.",
+    "citation_hint": "Bhatkhande thaat system."
+  },
+  {
+    "culture": "Indian",
+    "family": "Thaat",
+    "name": "Bhairav",
+    "bins": 12,
+    "intervals": [0, 1, 4, 5, 7, 8, 11],
+    "description": "Komal Re and Dha with shuddha Ga and Ni.",
+    "citation_hint": "Bhatkhande thaat system."
+  },
+  {
+    "culture": "Indian",
+    "family": "Thaat",
+    "name": "Poorvi",
+    "bins": 12,
+    "intervals": [0, 1, 4, 6, 7, 8, 11],
+    "description": "Komal Re and Dha with tivra Ma.",
+    "citation_hint": "Bhatkhande thaat system."
+  },
+  {
+    "culture": "Indian",
+    "family": "Thaat",
+    "name": "Marwa",
+    "bins": 12,
+    "intervals": [0, 1, 4, 6, 7, 9, 11],
+    "description": "Komal Re with tivra Ma.",
+    "citation_hint": "Bhatkhande thaat system."
+  },
+  {
+    "culture": "Indian",
+    "family": "Thaat",
+    "name": "Todi",
+    "bins": 12,
+    "intervals": [0, 1, 3, 6, 7, 8, 11],
+    "description": "Komal Re, Ga, Dha with tivra Ma.",
+    "citation_hint": "Bhatkhande thaat system."
+  },
+  {
+    "culture": "Chinese",
+    "family": "Pentatonic Mode",
+    "name": "Gong",
+    "bins": 12,
+    "intervals": [0, 2, 4, 7, 9],
+    "description": "Major pentatonic final on Gong.",
+    "citation_hint": "Traditional Chinese pentatonic mode rotations."
+  },
+  {
+    "culture": "Chinese",
+    "family": "Pentatonic Mode",
+    "name": "Shang",
+    "bins": 12,
+    "intervals": [0, 2, 5, 7, 10],
+    "description": "Pentatonic rotation with second-degree final.",
+    "citation_hint": "Traditional Chinese pentatonic mode rotations."
+  },
+  {
+    "culture": "Chinese",
+    "family": "Pentatonic Mode",
+    "name": "Jue",
+    "bins": 12,
+    "intervals": [0, 3, 5, 8, 10],
+    "description": "Pentatonic rotation centered on Jue.",
+    "citation_hint": "Traditional Chinese pentatonic mode rotations."
+  },
+  {
+    "culture": "Chinese",
+    "family": "Pentatonic Mode",
+    "name": "Zhi",
+    "bins": 12,
+    "intervals": [0, 2, 5, 7, 9],
+    "description": "Pentatonic rotation centered on Zhi.",
+    "citation_hint": "Traditional Chinese pentatonic mode rotations."
+  },
+  {
+    "culture": "Chinese",
+    "family": "Pentatonic Mode",
+    "name": "Yu",
+    "bins": 12,
+    "intervals": [0, 3, 5, 7, 10],
+    "description": "Pentatonic rotation centered on Yu.",
+    "citation_hint": "Traditional Chinese pentatonic mode rotations."
+  },
+  {
+    "culture": "Arabic",
+    "family": "Maqam",
+    "name": "Rast",
+    "bins": 24,
+    "intervals": [0, 4, 7, 10, 14, 18, 21],
+    "description": "Approximate 24-bin Rast profile with neutral third and neutral seventh behavior.",
+    "citation_hint": "Pedagogical maqam scale-degree approximation in a 24-bin octave."
+  },
+  {
+    "culture": "Arabic",
+    "family": "Maqam",
+    "name": "Bayati",
+    "bins": 24,
+    "intervals": [0, 3, 6, 10, 14, 16, 20],
+    "description": "Approximate 24-bin Bayati profile with lowered second and minor third area.",
+    "citation_hint": "Pedagogical maqam scale-degree approximation in a 24-bin octave."
+  },
+  {
+    "culture": "Arabic",
+    "family": "Maqam",
+    "name": "Hijaz",
+    "bins": 24,
+    "intervals": [0, 2, 8, 10, 14, 16, 20],
+    "description": "Approximate 24-bin Hijaz profile with the augmented second signature.",
+    "citation_hint": "Pedagogical maqam scale-degree approximation in a 24-bin octave."
+  },
+  {
+    "culture": "Arabic",
+    "family": "Maqam",
+    "name": "Nahawand",
+    "bins": 24,
+    "intervals": [0, 4, 6, 10, 14, 16, 20],
+    "description": "Approximate 24-bin Nahawand profile close to a natural-minor collection.",
+    "citation_hint": "Pedagogical maqam scale-degree approximation in a 24-bin octave."
+  },
+  {
+    "culture": "Arabic",
+    "family": "Maqam",
+    "name": "Ajam",
+    "bins": 24,
+    "intervals": [0, 4, 8, 10, 14, 18, 22],
+    "description": "Approximate 24-bin Ajam profile close to a major collection.",
+    "citation_hint": "Pedagogical maqam scale-degree approximation in a 24-bin octave."
+  },
+  {
+    "culture": "Turkish",
+    "family": "Makam",
+    "name": "Rast",
+    "bins": 24,
+    "intervals": [0, 4, 7, 10, 14, 18, 21],
+    "description": "Approximate Turkish Rast profile in a simplified 24-bin octave.",
+    "citation_hint": "Simplified makam approximation using a 24-bin octave rather than full comma notation."
+  },
+  {
+    "culture": "Turkish",
+    "family": "Makam",
+    "name": "Hicaz",
+    "bins": 24,
+    "intervals": [0, 2, 8, 10, 14, 16, 20],
+    "description": "Approximate Turkish Hicaz profile in a simplified 24-bin octave.",
+    "citation_hint": "Simplified makam approximation using a 24-bin octave rather than full comma notation."
+  },
+  {
+    "culture": "Turkish",
+    "family": "Makam",
+    "name": "Ussak",
+    "bins": 24,
+    "intervals": [0, 3, 6, 10, 14, 16, 20],
+    "description": "Approximate Turkish Ussak profile in a simplified 24-bin octave.",
+    "citation_hint": "Simplified makam approximation using a 24-bin octave rather than full comma notation."
+  },
+  {
+    "culture": "Turkish",
+    "family": "Makam",
+    "name": "Nihavend",
+    "bins": 24,
+    "intervals": [0, 4, 6, 10, 14, 16, 20],
+    "description": "Approximate Turkish Nihavend profile in a simplified 24-bin octave.",
+    "citation_hint": "Simplified makam approximation using a 24-bin octave rather than full comma notation."
+  },
+  {
+    "culture": "Turkish",
+    "family": "Makam",
+    "name": "Huseyni",
+    "bins": 24,
+    "intervals": [0, 4, 6, 10, 14, 18, 20],
+    "description": "Approximate Turkish Huseyni profile in a simplified 24-bin octave.",
+    "citation_hint": "Simplified makam approximation using a 24-bin octave rather than full comma notation."
+  },
+  {
+    "culture": "Japanese",
+    "family": "Pentatonic Mode",
+    "name": "Yo",
+    "bins": 12,
+    "intervals": [0, 2, 5, 7, 9],
+    "description": "Common pedagogical Yo pentatonic approximation.",
+    "citation_hint": "Pedagogical Japanese pentatonic mode approximation."
+  },
+  {
+    "culture": "Japanese",
+    "family": "Pentatonic Mode",
+    "name": "In",
+    "bins": 12,
+    "intervals": [0, 1, 5, 7, 8],
+    "description": "Common pedagogical In pentatonic approximation.",
+    "citation_hint": "Pedagogical Japanese pentatonic mode approximation."
+  },
+  {
+    "culture": "Japanese",
+    "family": "Pentatonic Mode",
+    "name": "Hirajoshi",
+    "bins": 12,
+    "intervals": [0, 2, 3, 7, 8],
+    "description": "Common pedagogical Hirajoshi approximation.",
+    "citation_hint": "Pedagogical Japanese pentatonic mode approximation."
+  },
+  {
+    "culture": "Japanese",
+    "family": "Pentatonic Mode",
+    "name": "Insen",
+    "bins": 12,
+    "intervals": [0, 1, 5, 7, 10],
+    "description": "Common pedagogical Insen approximation.",
+    "citation_hint": "Pedagogical Japanese pentatonic mode approximation."
+  },
+  {
+    "culture": "Japanese",
+    "family": "Pentatonic Mode",
+    "name": "Kumoi",
+    "bins": 12,
+    "intervals": [0, 2, 3, 7, 9],
+    "description": "Common pedagogical Kumoi approximation.",
+    "citation_hint": "Pedagogical Japanese pentatonic mode approximation."
+  },
+  {
+    "culture": "Western",
+    "family": "Mode",
+    "name": "Ionian / Major",
+    "bins": 12,
+    "intervals": [0, 2, 4, 5, 7, 9, 11],
+    "description": "Major-scale collection in Western tonal pedagogy.",
+    "citation_hint": "Common Western modal and scalar theory."
+  },
+  {
+    "culture": "Western",
+    "family": "Mode",
+    "name": "Aeolian / Natural Minor",
+    "bins": 12,
+    "intervals": [0, 2, 3, 5, 7, 8, 10],
+    "description": "Natural minor collection in Western tonal pedagogy.",
+    "citation_hint": "Common Western modal and scalar theory."
+  },
+  {
+    "culture": "Western",
+    "family": "Mode",
+    "name": "Dorian",
+    "bins": 12,
+    "intervals": [0, 2, 3, 5, 7, 9, 10],
+    "description": "Dorian collection in Western modal pedagogy.",
+    "citation_hint": "Common Western modal and scalar theory."
+  },
+  {
+    "culture": "Western",
+    "family": "Mode",
+    "name": "Phrygian",
+    "bins": 12,
+    "intervals": [0, 1, 3, 5, 7, 8, 10],
+    "description": "Phrygian collection in Western modal pedagogy.",
+    "citation_hint": "Common Western modal and scalar theory."
+  },
+  {
+    "culture": "Western",
+    "family": "Mode",
+    "name": "Lydian",
+    "bins": 12,
+    "intervals": [0, 2, 4, 6, 7, 9, 11],
+    "description": "Lydian collection in Western modal pedagogy.",
+    "citation_hint": "Common Western modal and scalar theory."
+  },
+  {
+    "culture": "Western",
+    "family": "Mode",
+    "name": "Mixolydian",
+    "bins": 12,
+    "intervals": [0, 2, 4, 5, 7, 9, 10],
+    "description": "Mixolydian collection in Western modal pedagogy.",
+    "citation_hint": "Common Western modal and scalar theory."
+  },
+  {
+    "culture": "Western",
+    "family": "Scale",
+    "name": "Harmonic Minor",
+    "bins": 12,
+    "intervals": [0, 2, 3, 5, 7, 8, 11],
+    "description": "Harmonic minor collection in Western pedagogy.",
+    "citation_hint": "Common Western modal and scalar theory."
+  },
+  {
+    "culture": "Western",
+    "family": "Scale",
+    "name": "Melodic Minor",
+    "bins": 12,
+    "intervals": [0, 2, 3, 5, 7, 9, 11],
+    "description": "Ascending melodic-minor collection in Western pedagogy.",
+    "citation_hint": "Common Western modal and scalar theory."
+  },
+  {
+    "culture": "Western",
+    "family": "Scale",
+    "name": "Blues Hexatonic",
+    "bins": 12,
+    "intervals": [0, 3, 5, 6, 7, 10],
+    "description": "Common blues hexatonic collection.",
+    "citation_hint": "Common Western modal and scalar theory."
+  }
+]
