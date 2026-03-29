@@ -1,151 +1,187 @@
 # Music Categorizer
 
-This repository contains a notebook-first prototype for estimating which scale family a recording most closely matches and which culture that scale library comes from. The current template library focuses on:
+## TL;DR
 
-- Persian dastgah families
-- Indian thaats
-- Chinese pentatonic modes
-- Arabic maqamat
-- Turkish makam approximations
-- Japanese pentatonic modes
+This project analyzes an uploaded audio file or a short live microphone recording and estimates:
+
+- the closest supported musical culture
+- the closest supported scale family or mode
+- the most likely tonic
+- a ranked list of alternative matches
+
+It is a transparent, heuristic system built from signal-processing features plus a curated template catalog. It currently works from a starter library of templates spanning:
+
+- Persian
+- Indian
+- Chinese
+- Arabic
+- Turkish
+- Japanese
 - Western modal and scalar families
 
-The workflow is designed for melody-forward audio. It works best on solo voice or lead-instrument recordings, or on mixes where the main melodic line is clearly dominant.
+The output should be read as "closest supported match in the current catalog," not as a definitive global musicology classifier.
 
-## Short Paper-Style Overview
+## Methodology
 
-### Title
+### Problem framing
 
-Heuristic Estimation of Cultural Scale Families from Monophonic or Melody-Dominant Audio
+The tool is designed to answer a practical question:
 
-### Abstract
+"Given a melody-forward recording, which supported scale family best matches its observed pitch content?"
 
-This project implements a lightweight computational pipeline for estimating the most likely cultural scale family present in an audio recording. Rather than training a large statistical model, the system uses signal-processing features and compares them against a curated library of scale templates drawn from Persian dastgah families, Indian thaats, and Chinese pentatonic modes. The method is intended as an interpretable prototype for exploratory listening, educational analysis, and rapid musical sketching. It is most reliable when applied to melody-forward recordings in which the tonic and scale degrees are clearly represented over time.
+This is intentionally narrower than full cultural or genre recognition. Many traditions depend not only on pitch collections, but also on melodic grammar, ornamentation, register behavior, cadence, rhythm, timbre, and performance practice. This code focuses primarily on pitch structure.
 
-### Objective
+### Core logic
 
-The main objective is to answer a practical question:
+The analysis pipeline is implemented in a small set of modules:
 
-"Given an audio clip, which supported cultural scale family best explains the observed pitch content?"
+- `music_categorizer/features.py`
+  Loads audio, trims silence, extracts harmonic content, computes chroma, and estimates voiced pitch with `pyin`.
+- `music_categorizer/catalog.py`
+  Loads the template library from `music_categorizer/data/scale_templates.json`.
+- `music_categorizer/analyzer.py`
+  Rotates each template over possible tonics, scores every alignment, and ranks the results.
+- `music_categorizer/notebook_ui.py`
+  Provides the notebook interface for file upload, live recording, result display, plots, and listening examples.
 
-The current system does not attempt full maqam, raga, or dastgah performance recognition in the musicological sense. Instead, it estimates the closest matching pitch-material family under a transparent template-matching framework.
+### Feature extraction
 
-### Method Summary
+For each recording, the code builds two complementary pitch representations:
 
-The method can be summarized in four stages:
+1. A 12-tone chroma profile.
+   This captures semitone-level pitch emphasis over time.
 
-1. Audio is loaded and trimmed to remove leading or trailing silence.
-2. Harmonic and pitch-based descriptors are extracted from the signal.
-3. Observed pitch distributions are compared with cultural scale templates.
-4. The system returns the highest-scoring scale, tonic estimate, and culture-level score breakdown.
+2. A pitch-class histogram from estimated fundamental frequency.
+   This captures which pitch classes are actually sung or played in voiced frames.
 
-### Signal Representation
+These are combined into a working 12-tone observation profile. For traditions that require microtonal approximation, the system also constructs a 24-bin octave representation.
 
-Two complementary pitch representations are used:
+### Template matching
 
-- A 12-tone chroma profile derived from constant-Q analysis, used to summarize semitone-level pitch emphasis.
-- A pitch-class histogram derived from `pyin` fundamental-frequency tracking, used to capture the distribution of voiced notes over time.
+Each supported scale family is stored as a template with:
 
-For Persian templates, the system also constructs a 24-bin pitch-class representation so that quarter-tone behavior can be approximated. This is not a full microtonal transcription system, but it gives the matcher a way to distinguish some neutral or quarter-tone pitch centers from nearby 12-tone alternatives.
+- culture
+- family
+- scale or mode name
+- octave resolution (`12` or `24` bins)
+- interval pattern relative to tonic
 
-### Template Library
+During inference, the analyzer tests each template against all tonic rotations and computes a score using:
 
-The current scale library is intentionally interpretable and now broader than the first prototype. It includes:
+- cosine similarity between the observed pitch profile and the template profile
+- a support-overlap score that checks whether active pitch bins align with the expected scale degrees
 
-- Persian dastgah-family approximations represented in a 24-bin octave
-- Indian thaats represented in a 12-bin octave
-- Chinese pentatonic mode rotations represented in a 12-bin octave
-- Arabic maqam approximations represented in a 24-bin octave
-- Turkish makam approximations represented in a 24-bin octave
-- Japanese pentatonic families represented in a 12-bin octave
-- Western modal and scalar families represented in a 12-bin octave
+For 24-bin templates, the scorer also considers whether the input appears genuinely microtonal. This helps reduce cases where quarter-tone material is flattened into a nearby 12-tone interpretation.
 
-Each template is encoded as a set of scale degrees relative to a tonic. During inference, the system tests all tonic rotations and keeps the best-scoring alignment.
+### Result interpretation
 
-### Inference Procedure
+The analyzer returns:
 
-For each candidate template, the observed pitch profile is compared against an idealized template vector. The scoring procedure combines:
+- a best overall match
+- normalized culture-level scores
+- a ranked set of top candidates
+- a tonic estimate
 
-- cosine similarity, which measures overall shape agreement between observed and expected pitch emphasis
-- a support-style score, which measures how well the set of active observed pitch classes overlaps with the template degrees
+High scores mean the observed pitch distribution resembles a supported template strongly. Lower scores usually mean one of three things:
 
-When quarter-tone evidence is present, Persian 24-bin templates receive additional weight, while nearby 12-tone competitors are reduced accordingly. This helps prevent clearly microtonal material from collapsing into a purely semitone-based interpretation.
+- the source is ambiguous
+- several traditions share similar pitch material
+- the music falls outside the current template library
 
-### Interpretation
+### Scope and limitations
 
-The output should be interpreted as a ranked hypothesis list rather than a definitive cultural label. In practice:
+This project is broader than the initial prototype, but it is still not a true "all musical cultures of the world" recognizer. Scale-template matching alone is not enough for that. A more complete system would need:
 
-- a high score suggests strong agreement between the audio's pitch distribution and a template
-- close scores across cultures suggest ambiguity or shared pitch material
-- the top tonic is the tonic that best aligns the observed distribution to the template under the current heuristic
+- phrase-level modeling
+- ornament and intonation modeling
+- larger and better validated corpora
+- culture-specific tuning systems
+- learned models beyond a fixed template catalog
 
-### Limitations
+So the right claim for this repository is:
 
-This method has several important limitations:
+"A transparent, extensible scale-family matcher over a growing cross-cultural template catalog."
 
-- It focuses on pitch content and does not model ornamentation, phrase grammar, cadential behavior, or melodic motion in depth.
-- It is stronger at thaat-like or scale-family matching than full tradition-specific identity recognition.
-- Dense polyphonic recordings, modulation, drone-heavy textures, and expressive intonation can reduce reliability.
-- Persian quarter-tone handling is approximate and should be understood as a coarse computational proxy.
+## Examples
 
-### Practical Conclusion
+### What the notebook does
 
-This repository is best viewed as an interpretable first-pass analysis tool. It is useful for experimentation, prototype building, and educational exploration, especially when the user wants transparent intermediate representations rather than a black-box classifier. The template catalog is now data-driven, so additional traditions can be added by extending `music_categorizer/data/scale_templates.json`.
+The notebook lets you either:
 
-## What is included
+- upload an audio file
+- record a short live sample from the microphone
 
-- A reusable Python package in `music_categorizer/`
-- An interactive notebook in `culture_scale_lab.ipynb`
-- Optional microphone capture from inside the notebook
-- A small test layer for the template matcher
+For each run, it shows:
 
-## How it works
+- the top predicted culture and scale family
+- culture score breakdown
+- top ranked candidate rows
+- representative listening examples for each row
+- audio playback
+- analysis plots
 
-1. The analyzer loads audio with `librosa`.
-2. It extracts a 12-tone chroma profile and a quarter-tone pitch-class histogram.
-3. It scores the recording against a curated library of cultural scale templates.
-4. It reports the top candidate scales, the most likely tonic, and confidence-style scores.
+### Example kinds of outcomes
 
-This is a heuristic classifier, not a trained ethnomusicology model. It can confuse traditions that share pitch material, and it cannot fully resolve raga or dastgah identity from scale degrees alone because phrasing, ornamentation, and melodic motion also matter.
+- A melody close to a major-scale collection may land near `Indian / Bilawal` or `Western / Ionian`, depending on how the observed pitch energy aligns with the catalog.
+- A melody centered on a Chinese-style anhemitonic pentatonic collection may land near one of the supported Chinese pentatonic modes.
+- A recording with strong quarter-tone behavior may push Persian, Arabic, or Turkish 24-bin templates above nearby 12-tone competitors.
+
+### Listening examples
+
+Each suggested row includes a curated listening pointer, usually via YouTube and Spotify search links. These examples are meant to help the user compare the predicted result against familiar repertoire or representative performances. They are illustrative references, not ground-truth labels for the analyzed recording.
 
 ## Setup
 
-Use the virtual environment already in this folder, then install the notebook/runtime dependencies:
+Install the notebook and runtime dependencies:
 
 ```bash
 .venv/bin/pip install -r requirements-dev.txt
 ```
 
-If you want to run the notebook:
-
-```bash
-.venv/bin/python run_notebook.py
-```
-
-That launcher keeps Jupyter's config and cache inside this project, and it creates a project-local kernel spec that points at `.venv` so the notebook uses the correct interpreter.
-
-If you also want the CLI commands:
+If you also want the CLI entry points:
 
 ```bash
 .venv/bin/pip install -e .
 ```
 
+## Running the notebook
+
+Start the notebook with:
+
+```bash
+.venv/bin/python run_notebook.py
+```
+
+This launcher keeps Jupyter config and cache inside the project and creates a project-local kernel that points at `.venv`.
+
+Open:
+
+```text
+culture_scale_lab.ipynb
+```
+
 ## Notebook usage
 
-- Upload an audio file with `Choose file`, then click `Analyze uploaded file`.
-- Or press `Start recording`, perform into the microphone, and press `Stop recording` when finished.
-- The notebook will show:
-  - best overall match
-  - culture score breakdown
-  - top scale candidates
-  - representative listening examples for each suggested row
-  - audio playback
-  - pitch-class plots
+### Upload flow
 
-The recorder now chooses the microphone device's preferred sample rate automatically when possible, with a safe high-quality fallback. Recording is manually stopped by the user, but it will also auto-stop after 30 seconds to avoid runaway memory use.
-Live microphone capture files are treated as temporary artifacts and are deleted automatically after analysis completes.
+1. Click `Choose file`.
+2. Select an audio file.
+3. Click `Analyze uploaded file`.
 
-For the cleanest results, prefer uncompressed or lightly compressed files such as `.wav`, `.flac`, or `.m4a`.
+### Live recording flow
+
+1. Click `Start recording`.
+2. Perform or sing into the microphone.
+3. Click `Stop recording`.
+
+The recorder:
+
+- uses the microphone device's preferred sample rate when possible
+- falls back to a safe default when needed
+- auto-stops after 30 seconds to avoid runaway memory use
+- deletes temporary live-recording files after analysis completes
+
+For best results, use melody-forward audio such as solo voice, flute, violin, oud, sitar, ney, or similarly exposed lead material.
 
 ## CLI usage
 
@@ -153,15 +189,22 @@ For the cleanest results, prefer uncompressed or lightly compressed files such a
 .venv/bin/music-scale-analyze path/to/audio.wav
 ```
 
-## Notes and caveats
+## Extending the catalog
 
-- Persian mode estimates use quarter-tone templates adapted to a 24-bin octave, so they are still approximations.
-- Indian support is thaat-level, not full raga recognition.
-- Chinese support currently targets the five core pentatonic modes.
-- Arabic and Turkish support currently use simplified 24-bin approximations rather than full theoretical tuning systems.
-- Japanese support currently focuses on a small set of commonly taught pentatonic families.
-- Microphone recording uses `sounddevice`, so macOS may prompt for microphone permission the first time you record.
-- If you prefer launching Jupyter manually, set repo-local config dirs first or use `music-scale-notebook`.
-- Listening examples are curated pointers for familiar recordings or songs associated with the predicted family or scale area; they are illustrative, not authoritative annotations.
-- Live recording is optimized for short analysis captures rather than long-form session recording.
-- True all-world culture recognition is still an open-ended research goal. Many traditions require phrase structure, ornamentation, tuning nuance, timbre, and corpus-based modeling beyond scale templates alone.
+The supported templates are stored in:
+
+```text
+music_categorizer/data/scale_templates.json
+```
+
+To add more traditions or families, extend that file with additional templates. In practice, the main challenge is not adding rows, but choosing interval patterns that are musically defensible and explicit about approximation.
+
+## Notes
+
+- Persian, Arabic, and Turkish support currently use simplified 24-bin approximations rather than full theoretical tuning systems.
+- Indian support is currently thaat-level, not full raga recognition.
+- Chinese support currently emphasizes core pentatonic rotations.
+- Japanese support currently covers a small pedagogical pentatonic set.
+- Western support is included mainly as a useful reference family and overlap baseline.
+- Microphone recording uses `sounddevice`, so macOS may ask for microphone permission on first use.
+- Low-confidence results should be treated as "unsupported or ambiguous" rather than forced cultural conclusions.
