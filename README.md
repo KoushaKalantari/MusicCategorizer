@@ -43,6 +43,8 @@ The analysis pipeline is implemented in a small set of modules:
   Rotates each template over possible tonics, scores every alignment, and ranks the results.
 - `music_categorizer/notebook_ui.py`
   Provides the notebook interface for file upload, live recording, result display, plots, and listening examples.
+- `music_categorizer/notebook_launcher.py`
+  Starts Jupyter with project-local config and kernel settings so the notebook uses the correct environment.
 
 ### Feature extraction
 
@@ -149,7 +151,7 @@ If you also want the CLI entry points:
 Start the notebook with:
 
 ```bash
-.venv/bin/python run_notebook.py
+.venv/bin/python launch_scale_lab.py
 ```
 
 This launcher keeps Jupyter config and cache inside the project and creates a project-local kernel that points at `.venv`.
@@ -157,7 +159,7 @@ This launcher keeps Jupyter config and cache inside the project and creates a pr
 Open:
 
 ```text
-culture_scale_lab.ipynb
+music_scale_lab.ipynb
 ```
 
 ## Notebook usage
@@ -180,6 +182,8 @@ The recorder:
 - falls back to a safe default when needed
 - auto-stops after 30 seconds to avoid runaway memory use
 - deletes temporary live-recording files after analysis completes
+
+Uploaded files are analyzed through temporary working copies, which are also deleted after analysis. The original uploaded file is left untouched.
 
 For best results, use melody-forward audio such as solo voice, flute, violin, oud, sitar, ney, or similarly exposed lead material.
 

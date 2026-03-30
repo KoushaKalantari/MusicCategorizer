@@ -28,7 +28,7 @@ dev = [
 
 [project.scripts]
 music-scale-analyze = "music_categorizer.cli:main"
-music-scale-notebook = "music_categorizer.launch_notebook:main"
+music-scale-notebook = "music_categorizer.notebook_launcher:main"
 
 [tool.setuptools.packages.find]
 include = ["music_categorizer*"]

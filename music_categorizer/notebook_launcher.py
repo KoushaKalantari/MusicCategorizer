@@ -56,7 +56,7 @@ def _ensure_project_kernel(project_root: Path, env: dict[str, str]) -> Path:
 
 def main() -> None:
     project_root = Path(__file__).resolve().parent.parent
-    notebook_path = project_root / "culture_scale_lab.ipynb"
+    notebook_path = project_root / "music_scale_lab.ipynb"
     env = _prepare_local_jupyter_env(project_root)
     _ensure_project_kernel(project_root, env)
     extra_args = sys.argv[1:]

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import html
 import os
+import tempfile
 import threading
 from dataclasses import dataclass, field
-from datetime import datetime
 from pathlib import Path
 
 if "MPLCONFIGDIR" not in os.environ:
@@ -47,10 +47,8 @@ class RecordingSession:
     reached_limit: bool = False
 
 
-def build_notebook_app(analyzer: ScaleAnalyzer | None = None, captures_dir: str | Path = "notebooks/_captures") -> VBox:
+def build_notebook_app(analyzer: ScaleAnalyzer | None = None) -> VBox:
     analyzer = analyzer or ScaleAnalyzer()
-    captures_path = Path(captures_dir)
-    captures_path.mkdir(parents=True, exist_ok=True)
     recording_session: RecordingSession | None = None
     culture_list = ", ".join(analyzer.supported_cultures())
     template_count = len(analyzer.templates)
@@ -63,7 +61,7 @@ def build_notebook_app(analyzer: ScaleAnalyzer | None = None, captures_dir: str 
         (
             "<div style='padding:12px 14px;background:#f4f7fb;border:1px solid #d9e2ec;border-radius:10px;"
             "margin-bottom:12px;'>"
-            "<h3 style='margin:0 0 8px 0;'>Culture Scale Lab</h3>"
+            "<h3 style='margin:0 0 8px 0;'>Music Scale Lab</h3>"
             "<div style='color:#4f5b67;'>Upload a file or record from the microphone. "
             "Recording uses the input device's preferred sample rate when available and auto-stops at "
             f"{MAX_RECORDING_SECONDS} seconds for safety.</div>"
@@ -127,10 +125,9 @@ def build_notebook_app(analyzer: ScaleAnalyzer | None = None, captures_dir: str 
             set_status("Upload a file first.")
             return
 
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        target = captures_path / f"{timestamp}_{uploaded['name']}"
+        target = temporary_audio_path(uploaded["name"])
         target.write_bytes(uploaded["content"])
-        analyze_path(target, uploaded["name"])
+        analyze_path(target, uploaded["name"], delete_after_analysis=True)
 
     def on_start_recording(_: Button) -> None:
         nonlocal recording_session
@@ -138,8 +135,7 @@ def build_notebook_app(analyzer: ScaleAnalyzer | None = None, captures_dir: str 
             set_status("A recording is already in progress.")
             return
 
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        target = captures_path / f"mic_capture_{timestamp}.wav"
+        target = temporary_audio_path("microphone_capture.wav")
         sample_rate = best_recording_sample_rate()
         recording_session = RecordingSession(
             target=target,
@@ -221,6 +217,13 @@ def first_uploaded_file(value: object) -> dict[str, object] | None:
         "name": first["name"],
         "content": bytes(first["content"]),
     }
+
+
+def temporary_audio_path(filename: str) -> Path:
+    suffix = Path(filename).suffix or ".wav"
+    handle = tempfile.NamedTemporaryFile(prefix="music_categorizer_", suffix=suffix, delete=False)
+    handle.close()
+    return Path(handle.name)
 
 
 def choose_recording_sample_rate(default_samplerate: float | int | None) -> int:

@@ -2,10 +2,10 @@
 __pycache__/
 .pytest_cache/
 .ipynb_checkpoints/
-notebooks/_captures/
 .cache/
 .ipython/
 .jupyter/
 .local/
 *.pyc
 *.egg-info/
+.DS_Store
